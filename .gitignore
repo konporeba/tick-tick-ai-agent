@@ -15,9 +15,6 @@ build/
 # Logs
 logs/
 
-# Runtime
-.last_run
-
 # IDE
 .vscode/
 .idea/
