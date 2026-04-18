@@ -18,6 +18,7 @@ from .agent import call_claude
 
 BATCH_SIZE = 10
 LOG_DIR = Path(__file__).parent.parent / "logs"
+LOG_DIR.mkdir(exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
