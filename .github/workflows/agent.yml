@@ -2,7 +2,7 @@ name: TickTick AI Agent
 
 on:
   schedule:
-    - cron: '*/15 * * * *'   # Every 15 minutes
+    - cron: '*/15 4-21 * * *'  # Every 15 min, 06:00-23:45 Polish summer / 05:00-22:45 Polish winter
   workflow_dispatch:           # Manual trigger for testing
 
 jobs:
