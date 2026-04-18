@@ -1,0 +1,18 @@
+# Only tasks in projects listed here will be considered for processing.
+# Project IDs come from the TickTick /project endpoint (or from the URL in the web app).
+# The Inbox has a special ID — fetch it once via the user info endpoint or find it in the
+# TickTick web app URL when viewing Inbox, then hardcode it here.
+allowed_projects:
+  - id: 'inbox'
+    name: 'Inbox'
+  - id: '5ba3e3bb53c24db00e47f70a'
+    name: 'Work'
+  - id: '5ba3e3d753c24db00e47f70d'
+    name: 'Personal'
+  - id: '721a4bd89a502ff0442260e8'
+    name: 'Meetings'
+  - id: '68e67b718f086b6f783db7de'
+    name: 'Projects'
+  # Add more project IDs as needed:
+  # - id: "PLACEHOLDER_PROJECT_ID_2"
+  #   name: "Work"
