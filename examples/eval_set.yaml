@@ -1,0 +1,313 @@
+# Evaluation set — 12 examples covering edge cases beyond the few-shot set.
+# Used by tests/run_eval.py for structural + LLM-as-judge scoring.
+
+- scenario: "description_with_links_and_names"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_001"
+    title: "Update onboarding doc per feedback from Anna"
+    description: "Anna reviewed the doc at https://docs.internal/onboarding and flagged 3 issues: section 2 is outdated (still references old SSO flow), the diagram on page 4 is broken, and the troubleshooting checklist is missing step 6. She needs the updated version by Friday."
+    priority: 3
+    tags:
+      - work
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_001"
+    title: "📝 Update onboarding doc per Anna's feedback"
+    description: |
+      Anna flagged 3 issues in https://docs.internal/onboarding: (1) section 2 references the
+      old SSO flow, (2) the diagram on page 4 is broken, (3) troubleshooting checklist is
+      missing step 6. Updated version needed by Friday.
+
+      ---
+      *documentation • onboarding • work*
+    priority: 3
+    tags:
+      - work
+    reasoning: "Preserved all specifics (Anna's name, URL, issue numbers, Friday deadline). Rewrote for brevity. Priority unchanged at 3 (user set it). Kept existing tag."
+
+- scenario: "short_title_only"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_002"
+    title: "CV"
+    description: ""
+    priority: 0
+    tags: []
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_002"
+    title: "📄 Update CV"
+    description: |
+      Review and update the CV with recent experience, projects, and skills. Ensure formatting
+      is consistent and tailored to the target role or industry. Consider adding measurable
+      achievements and removing outdated entries.
+
+      ---
+      *CV • career • learning*
+    priority: 1
+    tags:
+      - work
+      - learning
+    reasoning: "Title 'CV' was too vague — expanded to 'Update CV' for clarity. Generated description with actionable steps. Low priority, assigned work and learning tags."
+
+- scenario: "all_fields_already_good"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_003"
+    title: "📈 Analyze Q3 sales performance"
+    description: |
+      Pull Q3 sales data from Salesforce. Compare against Q2 and the annual target. Identify
+      top-performing regions and products. Present findings to the leadership team by end of month.
+
+      ---
+      *sales • analytics • reports*
+    priority: 3
+    tags:
+      - analytics
+      - reports
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_003"
+    title: "📈 Analyze Q3 sales performance"
+    description: |
+      Pull Q3 sales data from Salesforce. Compare against Q2 and the annual target. Identify
+      top-performing regions and products. Present findings to the leadership team by end of month.
+
+      ---
+      *sales • analytics • reports*
+    priority: 3
+    tags:
+      - analytics
+      - reports
+    reasoning: "All fields are already well-formed. Preserved everything unchanged — title has emoji, description has keywords block, priority and tags are appropriate."
+
+- scenario: "mixed_language_polish_title_english_description"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_004"
+    title: "Sprawdzić integrację z systemem ERP"
+    description: "Need to verify that the new ERP connector is syncing correctly with our production database. Check logs from the last 48h and compare record counts."
+    priority: 0
+    tags: []
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_004"
+    title: "🔗 Sprawdzić integrację z systemem ERP"
+    description: |
+      Verify that the new ERP connector is syncing correctly with the production database.
+      Review logs from the last 48h, compare record counts, and flag any discrepancies.
+      Escalate if sync errors exceed threshold.
+
+      ---
+      *ERP • integracja • automation • data*
+    priority: 3
+    tags:
+      - automation
+      - data
+    reasoning: "Polish title preserved, English description tightened and enhanced with escalation step. Priority set to 3 (technical verification with moderate scope). Tags added."
+
+- scenario: "preserve_priority_do_not_override"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_005"
+    title: "Read about transformer architectures"
+    description: ""
+    priority: 3
+    tags: []
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_005"
+    title: "📚 Read about transformer architectures"
+    description: |
+      Study the fundamentals of transformer architecture — attention mechanisms, positional
+      encoding, encoder-decoder structure. Focus on seminal papers (Attention Is All You Need).
+      Take notes on key concepts relevant to current projects.
+
+      ---
+      *transformers • machine learning • ai • learning*
+    priority: 3
+    tags:
+      - learning
+      - ai
+    reasoning: "Heuristics suggest priority 1 for learning tasks, but user set 3 — preserved. Generated description with concrete study steps and relevant paper reference."
+
+- scenario: "three_existing_tags_no_addition"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_006"
+    title: "Build factory floor reporting module"
+    description: "Create a module that aggregates data from machine sensors and displays real-time production metrics on the factory screen dashboard."
+    priority: 3
+    tags:
+      - factory_screens
+      - automation
+      - data
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_006"
+    title: "🏭 Build factory floor reporting module"
+    description: |
+      Develop a module that aggregates sensor data from factory machines and displays real-time
+      production metrics on the factory screen dashboard. Define data schema, implement
+      aggregation logic, and connect to the dashboard display layer.
+
+      ---
+      *factory • reporting • automation • data*
+    priority: 3
+    tags:
+      - factory_screens
+      - automation
+      - data
+    reasoning: "Already has 3 tags — no new tags added. Description enhanced with implementation steps. All existing tags preserved."
+
+- scenario: "multiple_matching_tags"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_007"
+    title: "Build ML model to predict customer churn"
+    description: ""
+    priority: 0
+    tags: []
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_007"
+    title: "🤖 Build ML model to predict customer churn"
+    description: |
+      Design and train a classification model to predict customer churn risk. Collect historical
+      customer data, engineer relevant features (usage frequency, contract type, support tickets),
+      select and tune a model (e.g., XGBoost or logistic regression), and validate with holdout
+      data. Define success metric (e.g., AUC > 0.85).
+
+      ---
+      *machine learning • churn prediction • analytics • ai*
+    priority: 3
+    tags:
+      - ai
+      - analytics
+    reasoning: "Task matches ai, analytics, data — chose most specific: ai and analytics. Generated detailed description with data pipeline, model selection, and success criteria. Priority 3 for a project deliverable."
+
+- scenario: "long_description_brevity"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_008"
+    title: "Migrate legacy authentication service"
+    description: "The legacy authentication service was originally built in 2018 and uses a custom JWT implementation that has since been superseded by the standard library approach we now use everywhere else in the codebase. It also has some hardcoded secrets which is a security concern that was raised in the last audit. We need to rewrite it to use the standard auth library, remove the hardcoded secrets and move them to the secrets manager, update all the downstream services that depend on the old auth service to use the new endpoints, write migration tests to make sure nothing breaks during the cutover, coordinate with the DevOps team for the deployment window, update the API docs, and then monitor for errors for 48 hours post-deployment. There's also a question of whether we should do a gradual rollout or a hard cutover — that decision needs to be made with the team lead before we start coding."
+    priority: 5
+    tags:
+      - work
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_008"
+    title: "🔐 Migrate legacy authentication service"
+    description: |
+      Rewrite the legacy auth service (built 2018, custom JWT) to use the standard auth library.
+      Key steps: (1) move hardcoded secrets to secrets manager, (2) update downstream service
+      endpoints, (3) write migration tests, (4) coordinate deployment window with DevOps, (5)
+      update API docs, (6) monitor 48h post-deploy. Discuss gradual rollout vs. hard cutover
+      with team lead before starting.
+
+      ---
+      *authentication • migration • security • work*
+    priority: 5
+    tags:
+      - work
+    reasoning: "Condensed 500+ char description to structured numbered steps preserving all key details. Priority 5 preserved (security concern + user-set). Added security tag alongside work."
+
+- scenario: "near_duplicate_few_shot_consistency"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_009"
+    title: "fix broken Slack integration immediately"
+    description: "The Slack notifications for deployment events stopped working after yesterday's update. Teams are missing critical alerts."
+    priority: 0
+    tags: []
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_009"
+    title: "🚨 Fix broken Slack integration"
+    description: |
+      Slack deployment notifications stopped working after yesterday's update, causing teams to
+      miss critical alerts. Investigate the Slack webhook configuration and check for breaking
+      changes in yesterday's deployment. Restore notifications and verify alert delivery.
+
+      ---
+      *slack • integration • automation • alerts*
+    priority: 5
+    tags:
+      - automation
+    reasoning: "Urgency signal 'immediately' and production impact → priority 5. Consistent with similar Fabriq integration fix example. Wrote focused description with investigation steps."
+
+- scenario: "special_characters_url_code"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_010"
+    title: "Fix bug in parseDate() function"
+    description: "The parseDate() function in src/utils/dates.ts throws 'TypeError: Cannot read properties of undefined' when input is null. Reproducible with: parseDate(null). Fix and add unit test. See issue #442."
+    priority: 0
+    tags: []
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_010"
+    title: "🐛 Fix null handling in parseDate()"
+    description: |
+      `parseDate()` in `src/utils/dates.ts` throws `TypeError: Cannot read properties of
+      undefined` when passed `null`. Reproducible: `parseDate(null)`. Add a null guard at the
+      function entry point and add a unit test covering the null case. Reference: issue #442.
+
+      ---
+      *bug fix • TypeScript • testing • data*
+    priority: 3
+    tags:
+      - work
+      - data
+    reasoning: "Preserved code references, file path, and issue number. Enhanced title to describe the actual bug (null handling). Priority 3 — no urgency signals present."
+
+- scenario: "health_safety_task"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_011"
+    title: "schedule annual blood tests"
+    description: ""
+    priority: 0
+    tags: []
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_011"
+    title: "🩺 Schedule annual blood tests"
+    description: |
+      Book an appointment with a lab or GP for a comprehensive annual blood panel. Include: CBC,
+      lipid profile, glucose, thyroid (TSH), vitamin D, and iron levels. Check if a referral is
+      needed. Set a reminder for results follow-up.
+
+      ---
+      *health • preventive care • medical*
+    priority: 3
+    tags:
+      - health
+    reasoning: "Health-related task → priority 3 per heuristics. Generated description with specific tests to request. Assigned health tag."
+
+- scenario: "finance_task"
+  raw:
+    project_id: "proj_eval"
+    task_id: "eval_012"
+    title: "review monthly budget and cut unnecessary subscriptions"
+    description: ""
+    priority: 0
+    tags: []
+  expected:
+    project_id: "proj_eval"
+    task_id: "eval_012"
+    title: "💰 Review budget and cut unused subscriptions"
+    description: |
+      Go through all active subscriptions (streaming, SaaS tools, memberships) and cancel any
+      that are unused or redundant. Review the monthly budget against actual spending in the last
+      3 months. Identify categories over budget and set spending targets.
+
+      ---
+      *budget • finance • subscriptions • home*
+    priority: 1
+    tags:
+      - finance
+      - home
+    reasoning: "Routine financial housekeeping → priority 1. Shortened title slightly. Generated structured description covering both subscription audit and budget review. Assigned finance and home tags."

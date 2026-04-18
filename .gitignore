@@ -1,0 +1,25 @@
+# Secrets
+.env
+config/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# Logs
+logs/
+
+# Runtime
+.last_run
+
+# IDE
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,155 @@
+# Few-shot examples injected into every Claude API call as user/assistant message pairs.
+# These teach the model the expected behavior across key scenarios.
+
+- scenario: 'empty_description_polish'
+  raw:
+    project_id: 'proj_001'
+    task_id: 'task_001'
+    title: 'Przygotować raport kwartalny'
+    description: ''
+    priority: 0
+    tags: []
+  expected:
+    project_id: 'proj_001'
+    task_id: 'task_001'
+    title: '📊 Przygotowanie raportu kwartalnego'
+    description: |
+      Zebranie danych sprzedażowych, finansowych i operacyjnych z ostatnich trzech miesięcy. Przygotowanie
+      wizualizacji kluczowych wskaźników (KPI) i porównanie z poprzednim kwartałem. Uwzględnienie
+      podsumowania wykonanych działań oraz planu na następny kwartał.
+      ---
+      *raport • analiza • dane kwartalne • finanse*
+    priority: 3
+    tags:
+      - reports
+      - work
+    reasoning: 'Added emoji, generated description in Polish covering data gathering and KPI comparison, set priority to 3 (project deliverable), assigned relevant tags.'
+
+- scenario: 'verbose_description_english'
+  raw:
+    project_id: 'proj_002'
+    task_id: 'task_002'
+    title: 'review the new automation dashboard we discussed last week with the team'
+    description: 'so basically last week in the meeting we talked about this new dashboard that the team built and I said I would take a look at it and give some feedback on the design and whether the metrics being shown are actually the right ones and also if the filters work correctly and if the layout makes sense for the people who will be using it on a daily basis and there might be some issues with the mobile view too'
+    priority: 0
+    tags:
+      - automation
+  expected:
+    project_id: 'proj_002'
+    task_id: 'task_002'
+    title: '🔍 Review new automation dashboard'
+    description: |
+      Review the automation dashboard built by the team. Evaluate: metric relevance, filter
+      functionality, layout usability for daily users, and mobile view rendering. Provide
+      structured feedback on design and data presentation.
+      ---
+      *dashboard • review • automation • UX*
+    priority: 1
+    tags:
+      - automation
+      - work
+    reasoning: "Shortened title to under 60 chars, rewrote description removing rambling while preserving all key review points, kept existing tag and added 'work', set priority to 1 (routine review task)."
+
+- scenario: 'preserve_existing_priority'
+  raw:
+    project_id: 'proj_003'
+    task_id: 'task_003'
+    title: "research competitors' pricing models"
+    description: ''
+    priority: 5
+    tags: []
+  expected:
+    project_id: 'proj_003'
+    task_id: 'task_003'
+    title: "🔎 Research competitors' pricing models"
+    description: |
+      Identify the top 5–10 direct competitors and document their pricing tiers, packaging,
+      and any public discounts or freemium offers. Note positioning strategies (value-based,
+      usage-based, flat-rate) and compare against current offering. Summarize findings in a
+      brief competitive matrix.
+      ---
+      *pricing • competitive research • strategy • analytics*
+    priority: 5
+    tags:
+      - analytics
+      - work
+    reasoning: 'Added emoji, generated description with concrete research steps. Kept priority at 5 as explicitly set by the user — no override despite heuristics suggesting lower.'
+
+- scenario: 'high_priority_urgency'
+  raw:
+    project_id: 'proj_004'
+    task_id: 'task_004'
+    title: 'fix broken Fabriq integration ASAP'
+    description: 'Production is affected — the Fabriq sync has been failing since this morning and users cannot push updates from the factory floor. Need to investigate the API connector and check if there was a breaking change in the last deployment.'
+    priority: 0
+    tags: []
+  expected:
+    project_id: 'proj_004'
+    task_id: 'task_004'
+    title: '🚨 Fix broken Fabriq integration'
+    description: |
+      Production outage: Fabriq sync has been failing since this morning, blocking users from
+      pushing factory floor updates. Investigate the API connector for breaking changes introduced
+      in the last deployment. Check API logs, compare connector config against Fabriq changelog,
+      and roll back or patch as needed.
+      ---
+      *fabriq • integration • production outage • automation*
+    priority: 5
+    tags:
+      - fabriq
+      - automation
+    reasoning: "Set priority to 5 — production is affected and 'ASAP' is an explicit urgency signal. Rewrote description to include clear investigation steps. Added fabriq and automation tags."
+
+- scenario: 'personal_lifestyle_task'
+  raw:
+    project_id: 'proj_005'
+    task_id: 'task_005'
+    title: 'find a good gym nearby'
+    description: ''
+    priority: 0
+    tags: []
+  expected:
+    project_id: 'proj_005'
+    task_id: 'task_005'
+    title: '🏋️ Find a good gym nearby'
+    description: |
+      Search for gyms within a reasonable commute (under 20 minutes). Compare membership fees,
+      available equipment, group classes, and opening hours. Check reviews on Google Maps or
+      similar. Consider a free trial before committing.
+      ---
+      *gym • fitness • health • sport*
+    priority: 1
+    tags:
+      - sport
+      - health
+    reasoning: 'Added emoji, generated practical description with comparison criteria, set priority to 1 (personal non-urgent task), assigned sport and health tags.'
+
+- scenario: 'user_listed_subtasks_become_checkboxes'
+  raw:
+    project_id: 'proj_006'
+    task_id: 'task_006'
+    title: 'Deploy new release to production'
+    description: 'Before deploying: 1. Run full test suite, 2. Update CHANGELOG, 3. Bump version in package.json, 4. Build Docker image and push to registry, 5. Apply DB migrations, 6. Monitor error rate for 30 min post-deploy'
+    priority: 3
+    tags:
+      - work
+  expected:
+    project_id: 'proj_006'
+    task_id: 'task_006'
+    title: '🚀 Deploy new release to production'
+    description: |
+      Pre-deployment checklist:
+
+      - [ ] Run full test suite
+      - [ ] Update CHANGELOG
+      - [ ] Bump version in package.json
+      - [ ] Build Docker image and push to registry
+      - [ ] Apply DB migrations
+      - [ ] Monitor error rate for 30 min post-deploy
+      ---
+      *deployment • release • automation • work*
+    priority: 3
+    tags:
+      - work
+      - automation
+    reasoning: 'User explicitly listed 6 numbered steps — converted to checkboxes for in-app tracking. Priority and existing tag preserved. Added automation tag.'
