@@ -1,6 +1,6 @@
 # TickTick AI Agent
 
-A Python agent that runs on a GitHub Actions cron schedule, fetches unprocessed tasks from an allowlist of TickTick projects, and uses Claude (Haiku 4.5) to enrich them — improving titles, descriptions, priorities, and tags.
+A Python agent that runs on a Raspberry Pi via cron, fetches unprocessed tasks from an allowlist of TickTick projects, and uses Claude (Haiku 4.5) to enrich them — improving titles, descriptions, priorities, and tags.
 
 ## How it works
 
@@ -28,21 +28,13 @@ Edit `config/allowed_projects.yaml` and replace the placeholder IDs with your re
 
 TickTick uses OAuth2. You need to:
 1. Register an app at [developer.ticktick.com](https://developer.ticktick.com).
-2. Run the one-time OAuth flow locally to get a refresh token.
-3. Store the credentials as GitHub Actions secrets (see below).
+2. Run the one-time OAuth flow to get an access token (opens a browser window — Chrome on Raspberry Pi works fine):
+   ```bash
+   python get_refresh_token.py
+   ```
+3. The token is written to your `.env` file automatically.
 
-### 4. Configure secrets
-
-In your GitHub repository, go to **Settings → Secrets and variables → Actions** and add:
-
-| Secret | Description |
-|---|---|
-| `TICKTICK_CLIENT_ID` | OAuth app client ID |
-| `TICKTICK_CLIENT_SECRET` | OAuth app client secret |
-| `TICKTICK_REFRESH_TOKEN` | Long-lived refresh token from the OAuth flow |
-| `ANTHROPIC_API_KEY` | Your Anthropic API key |
-
-### 5. Local development
+### 4. Configure credentials
 
 Copy `.env.example` to `.env` and fill in your credentials:
 
@@ -50,7 +42,20 @@ Copy `.env.example` to `.env` and fill in your credentials:
 cp .env.example .env
 ```
 
-Then run the agent locally:
+| Variable | Description |
+|---|---|
+| `TICKTICK_ACCESS_TOKEN` | Access token from the OAuth flow |
+| `ANTHROPIC_API_KEY` | Your Anthropic API key |
+
+### 5. Schedule with cron
+
+Add the following entry to your crontab (`crontab -e`) to run the agent every 15 minutes between 06:00 and 23:45:
+
+```
+*/15 6-23 * * * cd /path/to/tick-tick-ai-agent && python -m src.main >> logs/agent.log 2>&1
+```
+
+To run the agent manually:
 
 ```bash
 python -m src.main
@@ -59,7 +64,6 @@ python -m src.main
 ## Project structure
 
 ```
-.github/workflows/agent.yml   GitHub Actions workflow (cron + keep-alive)
 src/
   main.py                     Orchestration entry point
   ticktick_client.py          TickTick API client (OAuth2, CRUD, rate limiting)
@@ -108,8 +112,8 @@ Using Claude Haiku 4.5 with prompt caching:
 - Run with 3 new tasks: ~$0.006.
 - Realistic monthly cost: $3–5 depending on task volume.
 
-## GitHub Actions cron notes
+## Cron notes
 
-- Scheduled at `*/15` (every 15 minutes). On public repos, GitHub Actions minutes are free.
-- A keep-alive commit to `.last_run` is made on every scheduled run to prevent GitHub from disabling the workflow after 60 days of repo inactivity.
-- Scheduled workflows can be delayed 10–30 minutes during high GitHub load — acceptable for this use case.
+- Scheduled at `*/15 6-23` (every 15 minutes, 06:00–23:45). Adjust the hours to match your timezone.
+- Raspberry Pi cron is reliable for this workload — no cold-start delay or platform-imposed dormancy limits.
+- Logs are written to `logs/agent.log` and a run summary to `logs/job_summary.md` after each execution.
