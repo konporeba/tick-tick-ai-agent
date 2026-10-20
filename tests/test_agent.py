@@ -14,7 +14,13 @@ from src.agent import (
     VALID_PRIORITIES,
 )
 
-ALLOWED_TAGS = ["work", "analytics", "ai", "automation", "learning"]
+ALLOWED_TAGS = {
+    "work": "Work tasks.",
+    "analytics": "Reports and dashboards.",
+    "ai": "AI and ML.",
+    "automation": "Scripts and workflows.",
+    "learning": "Courses and reading.",
+}
 
 FEW_SHOT = [
     {
@@ -31,6 +37,11 @@ class TestRenderAllowedTags:
         rendered = render_allowed_tags(ALLOWED_TAGS)
         for tag in ALLOWED_TAGS:
             assert tag in rendered
+
+    def test_contains_descriptions(self):
+        rendered = render_allowed_tags(ALLOWED_TAGS)
+        for desc in ALLOWED_TAGS.values():
+            assert desc in rendered
 
     def test_has_yaml_block(self):
         rendered = render_allowed_tags(ALLOWED_TAGS)

@@ -86,7 +86,9 @@ Use these heuristics to infer priority:
 
 **If tags are present:** Keep all existing tags. Add at most 1 additional tag only if it strongly fits. Never remove existing tags.
 
-**Never invent new tags.** Only use tags from the allowed list provided below.
+**Choosing tags:** Each allowed tag below comes with a description of which tasks belong under it. Pick the tag(s) whose description best matches the task's subject. Prefer the single best fit; add a second tag only when the task clearly spans two areas.
+
+**Never invent new tags.** Only use tags from the allowed list provided below, copied exactly — including the emoji and the hyphen (e.g. `🤖-ai`). Tags never contain spaces.
 
 ---
 

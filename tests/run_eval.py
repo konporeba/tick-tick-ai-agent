@@ -39,7 +39,7 @@ VALID_PRIORITIES = {0, 1, 3, 5}
 # Layer 1 — Structural assertions
 # ---------------------------------------------------------------------------
 
-def check_structural(raw: dict, actual: dict, allowed_tags: list[str]) -> list[str]:
+def check_structural(raw: dict, actual: dict, allowed_tags: dict[str, str]) -> list[str]:
     """Return list of failure messages (empty = pass)."""
     failures = []
     allowed_set = set(allowed_tags)

@@ -20,7 +20,8 @@ def get_env(name: str) -> str:
     return value
 
 
-def load_allowed_tags() -> list[str]:
+def load_allowed_tags() -> dict[str, str]:
+    """Return {tag_name: guidance}. Iterating the result yields tag names."""
     data = _load_yaml(BASE_DIR / "config" / "allowed_tags.yaml")
     return data["allowed_tags"]
 

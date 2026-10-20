@@ -9,7 +9,7 @@
     description: "Anna reviewed the doc at https://docs.internal/onboarding and flagged 3 issues: section 2 is outdated (still references old SSO flow), the diagram on page 4 is broken, and the troubleshooting checklist is missing step 6. She needs the updated version by Friday."
     priority: 3
     tags:
-      - work
+      - '🧩-systems'
   expected:
     project_id: "proj_eval"
     task_id: "eval_001"
@@ -23,7 +23,7 @@
       *documentation • onboarding • work*
     priority: 3
     tags:
-      - work
+      - '🧩-systems'
     reasoning: "Preserved all specifics (Anna's name, URL, issue numbers, Friday deadline). Rewrote for brevity. Priority unchanged at 3 (user set it). Kept existing tag."
 
 - scenario: "short_title_only"
@@ -47,9 +47,8 @@
       *CV • career • learning*
     priority: 1
     tags:
-      - work
-      - learning
-    reasoning: "Title 'CV' was too vague — expanded to 'Update CV' for clarity. Generated description with actionable steps. Low priority, assigned work and learning tags."
+      - '🎓-learning'
+    reasoning: "Title 'CV' was too vague — expanded to 'Update CV' for clarity. Generated description with actionable steps. Low priority, assigned 🎓-learning tag (career development)."
 
 - scenario: "all_fields_already_good"
   raw:
@@ -64,8 +63,7 @@
       *sales • analytics • reports*
     priority: 3
     tags:
-      - analytics
-      - reports
+      - '📊-reporting'
   expected:
     project_id: "proj_eval"
     task_id: "eval_003"
@@ -78,8 +76,7 @@
       *sales • analytics • reports*
     priority: 3
     tags:
-      - analytics
-      - reports
+      - '📊-reporting'
     reasoning: "All fields are already well-formed. Preserved everything unchanged — title has emoji, description has keywords block, priority and tags are appropriate."
 
 - scenario: "mixed_language_polish_title_english_description"
@@ -103,8 +100,8 @@
       *ERP • integracja • automation • data*
     priority: 3
     tags:
-      - automation
-      - data
+      - '🧩-systems'
+      - '⚙️-automation'
     reasoning: "Polish title preserved, English description tightened and enhanced with escalation step. Priority set to 3 (technical verification with moderate scope). Tags added."
 
 - scenario: "preserve_priority_do_not_override"
@@ -128,8 +125,8 @@
       *transformers • machine learning • ai • learning*
     priority: 3
     tags:
-      - learning
-      - ai
+      - '🎓-learning'
+      - '🤖-ai'
     reasoning: "Heuristics suggest priority 1 for learning tasks, but user set 3 — preserved. Generated description with concrete study steps and relevant paper reference."
 
 - scenario: "three_existing_tags_no_addition"
@@ -140,9 +137,9 @@
     description: "Create a module that aggregates data from machine sensors and displays real-time production metrics on the factory screen dashboard."
     priority: 3
     tags:
-      - factory_screens
-      - automation
-      - data
+      - '🧩-systems'
+      - '⚙️-automation'
+      - '📊-reporting'
   expected:
     project_id: "proj_eval"
     task_id: "eval_006"
@@ -156,9 +153,9 @@
       *factory • reporting • automation • data*
     priority: 3
     tags:
-      - factory_screens
-      - automation
-      - data
+      - '🧩-systems'
+      - '⚙️-automation'
+      - '📊-reporting'
     reasoning: "Already has 3 tags — no new tags added. Description enhanced with implementation steps. All existing tags preserved."
 
 - scenario: "multiple_matching_tags"
@@ -183,9 +180,9 @@
       *machine learning • churn prediction • analytics • ai*
     priority: 3
     tags:
-      - ai
-      - analytics
-    reasoning: "Task matches ai, analytics, data — chose most specific: ai and analytics. Generated detailed description with data pipeline, model selection, and success criteria. Priority 3 for a project deliverable."
+      - '🤖-ai'
+      - '📊-reporting'
+    reasoning: "Task matches 🤖-ai and 📊-reporting (churn analytics) — assigned both. Generated detailed description with data pipeline, model selection, and success criteria. Priority 3 for a project deliverable."
 
 - scenario: "long_description_brevity"
   raw:
@@ -195,7 +192,7 @@
     description: "The legacy authentication service was originally built in 2018 and uses a custom JWT implementation that has since been superseded by the standard library approach we now use everywhere else in the codebase. It also has some hardcoded secrets which is a security concern that was raised in the last audit. We need to rewrite it to use the standard auth library, remove the hardcoded secrets and move them to the secrets manager, update all the downstream services that depend on the old auth service to use the new endpoints, write migration tests to make sure nothing breaks during the cutover, coordinate with the DevOps team for the deployment window, update the API docs, and then monitor for errors for 48 hours post-deployment. There's also a question of whether we should do a gradual rollout or a hard cutover — that decision needs to be made with the team lead before we start coding."
     priority: 5
     tags:
-      - work
+      - '🧩-systems'
   expected:
     project_id: "proj_eval"
     task_id: "eval_008"
@@ -211,8 +208,8 @@
       *authentication • migration • security • work*
     priority: 5
     tags:
-      - work
-    reasoning: "Condensed 500+ char description to structured numbered steps preserving all key details. Priority 5 preserved (security concern + user-set). Added security tag alongside work."
+      - '🧩-systems'
+    reasoning: "Condensed 500+ char description to structured numbered steps preserving all key details. Priority 5 preserved (security concern + user-set). Kept existing tag."
 
 - scenario: "near_duplicate_few_shot_consistency"
   raw:
@@ -235,7 +232,7 @@
       *slack • integration • automation • alerts*
     priority: 5
     tags:
-      - automation
+      - '⚙️-automation'
     reasoning: "Urgency signal 'immediately' and production impact → priority 5. Consistent with similar Fabriq integration fix example. Wrote focused description with investigation steps."
 
 - scenario: "special_characters_url_code"
@@ -259,8 +256,7 @@
       *bug fix • TypeScript • testing • data*
     priority: 3
     tags:
-      - work
-      - data
+      - '🧩-systems'
     reasoning: "Preserved code references, file path, and issue number. Enhanced title to describe the actual bug (null handling). Priority 3 — no urgency signals present."
 
 - scenario: "health_safety_task"
@@ -284,8 +280,8 @@
       *health • preventive care • medical*
     priority: 3
     tags:
-      - health
-    reasoning: "Health-related task → priority 3 per heuristics. Generated description with specific tests to request. Assigned health tag."
+      - '❤️-health'
+    reasoning: "Health-related task → priority 3 per heuristics. Generated description with specific tests to request. Assigned ❤️-health tag."
 
 - scenario: "finance_task"
   raw:
@@ -308,6 +304,6 @@
       *budget • finance • subscriptions • home*
     priority: 1
     tags:
-      - finance
-      - home
-    reasoning: "Routine financial housekeeping → priority 1. Shortened title slightly. Generated structured description covering both subscription audit and budget review. Assigned finance and home tags."
+      - '💰-finance'
+      - '🏠-home'
+    reasoning: "Routine financial housekeeping → priority 1. Shortened title slightly. Generated structured description covering both subscription audit and budget review. Assigned 💰-finance and 🏠-home tags."

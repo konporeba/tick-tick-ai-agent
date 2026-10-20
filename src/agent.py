@@ -10,16 +10,16 @@ TOKENS_PER_TASK = 500
 VALID_PRIORITIES = {0, 1, 3, 5}
 
 
-def render_allowed_tags(allowed_tags: list[str]) -> str:
-    tag_list = "\n".join(f"  - {t}" for t in allowed_tags)
-    return f"## Allowed Tags\n\n```yaml\n{tag_list}\n```"
+def render_allowed_tags(allowed_tags: dict[str, str]) -> str:
+    tag_list = "\n".join(f'  "{t}": {desc}' for t, desc in allowed_tags.items())
+    return f"## Allowed Tags\n\nTag name → which tasks belong under it.\n\n```yaml\n{tag_list}\n```"
 
 
 def build_messages(
     tasks: list[dict],
     system_prompt: str,
     few_shot: list[dict],
-    allowed_tags: list[str],
+    allowed_tags: dict[str, str],
 ) -> tuple[list[dict], list[dict]]:
     system = [
         {
@@ -96,7 +96,7 @@ def call_claude(
     tasks: list[dict],
     system_prompt: str,
     few_shot: list[dict],
-    allowed_tags: list[str],
+    allowed_tags: dict[str, str],
     client: anthropic.Anthropic,
 ) -> list[dict]:
     if not tasks:

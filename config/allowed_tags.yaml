@@ -1,17 +1,13 @@
+# Tag name -> guidance on which tasks belong under it.
+# Names must match TickTick exactly (no spaces; emoji and label joined with a hyphen).
 allowed_tags:
-  - analytics
-  - work
-  - data
-  - automation
-  - fabriq
-  - factory_screens
-  - digital_community
-  - ai
-  - reports
-  - sport
-  - learning
-  - home
-  - health
-  - car
-  - finance
-  - fun
+  '📊-reporting': 'Reports, dashboards, KPIs, analytics, data analysis and presenting results.'
+  '⚙️-automation': 'Scripts, workflows, scheduled jobs, integrations, CI/CD, deployments and removing manual work.'
+  '🤖-ai': 'AI and machine learning: LLMs, prompts, agents, AI tools and experiments.'
+  '🧩-systems': 'Building, configuring, maintaining or fixing business/IT systems and platforms (e.g. Fabriq, factory screens, databases, infrastructure, production incidents).'
+  '🌐-digital': 'Digital community and digital transformation initiatives: knowledge sharing, meetups, newsletters, online presence, evangelising new tools.'
+  '🎓-learning': 'Courses, reading, studying, certifications, research and skill development.'
+  '🏠-home': 'Household matters: chores, repairs, shopping, car, family logistics and errands.'
+  '💰-finance': 'Money matters: budgeting, bills, taxes, investments, insurance, purchases with financial impact.'
+  '❤️-health': 'Physical and mental health: doctor visits, medication, sport, fitness, diet, sleep, wellbeing.'
+  '🎉-social': 'Friends, family events, celebrations, hobbies, entertainment, travel and fun.'

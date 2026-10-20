@@ -21,8 +21,7 @@
       *raport • analiza • dane kwartalne • finanse*
     priority: 3
     tags:
-      - reports
-      - work
+      - '📊-reporting'
     reasoning: 'Added emoji, generated description in Polish covering data gathering and KPI comparison, set priority to 3 (project deliverable), assigned relevant tags.'
 
 - scenario: 'verbose_description_english'
@@ -33,7 +32,7 @@
     description: 'so basically last week in the meeting we talked about this new dashboard that the team built and I said I would take a look at it and give some feedback on the design and whether the metrics being shown are actually the right ones and also if the filters work correctly and if the layout makes sense for the people who will be using it on a daily basis and there might be some issues with the mobile view too'
     priority: 0
     tags:
-      - automation
+      - '⚙️-automation'
   expected:
     project_id: 'proj_002'
     task_id: 'task_002'
@@ -46,9 +45,9 @@
       *dashboard • review • automation • UX*
     priority: 1
     tags:
-      - automation
-      - work
-    reasoning: "Shortened title to under 60 chars, rewrote description removing rambling while preserving all key review points, kept existing tag and added 'work', set priority to 1 (routine review task)."
+      - '⚙️-automation'
+      - '📊-reporting'
+    reasoning: "Shortened title to under 60 chars, rewrote description removing rambling while preserving all key review points, kept existing tag and added '📊-reporting' (dashboard review), set priority to 1 (routine review task)."
 
 - scenario: 'preserve_existing_priority'
   raw:
@@ -71,8 +70,7 @@
       *pricing • competitive research • strategy • analytics*
     priority: 5
     tags:
-      - analytics
-      - work
+      - '📊-reporting'
     reasoning: 'Added emoji, generated description with concrete research steps. Kept priority at 5 as explicitly set by the user — no override despite heuristics suggesting lower.'
 
 - scenario: 'high_priority_urgency'
@@ -96,9 +94,9 @@
       *fabriq • integration • production outage • automation*
     priority: 5
     tags:
-      - fabriq
-      - automation
-    reasoning: "Set priority to 5 — production is affected and 'ASAP' is an explicit urgency signal. Rewrote description to include clear investigation steps. Added fabriq and automation tags."
+      - '🧩-systems'
+      - '⚙️-automation'
+    reasoning: "Set priority to 5 — production is affected and 'ASAP' is an explicit urgency signal. Rewrote description to include clear investigation steps. Added 🧩-systems (Fabriq platform) and ⚙️-automation (sync integration) tags."
 
 - scenario: 'personal_lifestyle_task'
   raw:
@@ -120,9 +118,8 @@
       *gym • fitness • health • sport*
     priority: 1
     tags:
-      - sport
-      - health
-    reasoning: 'Added emoji, generated practical description with comparison criteria, set priority to 1 (personal non-urgent task), assigned sport and health tags.'
+      - '❤️-health'
+    reasoning: 'Added emoji, generated practical description with comparison criteria, set priority to 1 (personal non-urgent task), assigned ❤️-health tag (fitness).'
 
 - scenario: 'user_listed_subtasks_become_checkboxes'
   raw:
@@ -132,7 +129,7 @@
     description: 'Before deploying: 1. Run full test suite, 2. Update CHANGELOG, 3. Bump version in package.json, 4. Build Docker image and push to registry, 5. Apply DB migrations, 6. Monitor error rate for 30 min post-deploy'
     priority: 3
     tags:
-      - work
+      - '🧩-systems'
   expected:
     project_id: 'proj_006'
     task_id: 'task_006'
@@ -150,6 +147,6 @@
       *deployment • release • automation • work*
     priority: 3
     tags:
-      - work
-      - automation
+      - '🧩-systems'
+      - '⚙️-automation'
     reasoning: 'User explicitly listed 6 numbered steps — converted to checkboxes for in-app tracking. Priority and existing tag preserved. Added automation tag.'
