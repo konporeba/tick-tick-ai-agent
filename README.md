@@ -4,7 +4,7 @@ A Python agent that runs on a Raspberry Pi via cron, fetches unprocessed tasks f
 
 ## How it works
 
-1. Fetches tasks from allowed TickTick projects every 15 minutes.
+1. Fetches tasks from allowed TickTick projects every 10 minutes.
 2. Filters out completed tasks and tasks already processed (identified by an emoji prefix in the title).
 3. Sends unprocessed tasks to Claude in batches of up to 10.
 4. Claude adds an emoji prefix, improves the title, generates/rewrites the description, infers priority, and assigns tags.
@@ -49,10 +49,10 @@ cp .env.example .env
 
 ### 5. Schedule with cron
 
-Add the following entry to your crontab (`crontab -e`) to run the agent every 15 minutes between 06:00 and 23:45:
+Add the following entry to your crontab (`crontab -e`) to run the agent every 10 minutes, around the clock:
 
 ```
-*/15 6-23 * * * cd /path/to/tick-tick-ai-agent && python -m src.main >> logs/agent.log 2>&1
+*/10 * * * * cd /path/to/tick-tick-ai-agent && python -m src.main >> logs/agent.log 2>&1
 ```
 
 To run the agent manually:
@@ -114,6 +114,6 @@ Using Claude Haiku 4.5 with prompt caching:
 
 ## Cron notes
 
-- Scheduled at `*/15 6-23` (every 15 minutes, 06:00–23:45). Adjust the hours to match your timezone.
+- Scheduled at `*/10 * * * *` (every 10 minutes, around the clock). To run only during waking hours, restrict the hour field, e.g. `*/10 6-23 * * *`.
 - Raspberry Pi cron is reliable for this workload — no cold-start delay or platform-imposed dormancy limits.
 - Logs are written to `logs/agent.log` and a run summary to `logs/job_summary.md` after each execution.
